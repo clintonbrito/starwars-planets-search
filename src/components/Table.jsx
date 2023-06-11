@@ -1,10 +1,23 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 import randomID from '../helpers/randomID';
 import '../index.css';
 
 function Table() {
-  const { planets, columnLabels } = useContext(PlanetsContext);
+  const {
+    planets,
+    columnLabels,
+    filterByName,
+  } = useContext(PlanetsContext);
+
+  const [filteredPlanets, setFilteredPlanets] = useState(planets);
+
+  useEffect(() => {
+    const filtersPlanets = planets.filter(({ name }) => (
+      name.toLowerCase().includes(filterByName.toLowerCase())
+    ));
+    setFilteredPlanets(filtersPlanets);
+  }, [filterByName, planets]);
 
   return (
     <div>
@@ -22,7 +35,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
-          {planets.map((planet, index) => (
+          { filteredPlanets.map((planet, index) => (
             <tr
               key={ randomID() }
               className={ index % 2 === 0 ? 'bg-zinc-900' : 'bg-zinc-800' }

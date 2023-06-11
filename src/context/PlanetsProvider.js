@@ -4,6 +4,7 @@ import PlanetsContext from './PlanetsContext';
 
 function PlanetsProvider({ children }) {
   const [planets, setPlanets] = useState([]);
+  const [filterByName, setFilterByName] = useState('');
 
   const columnLabels = [
     'Name',
@@ -36,13 +37,15 @@ function PlanetsProvider({ children }) {
     fetchPlanetsData();
   }, []);
 
+  const value = {
+    planets,
+    columnLabels,
+    filterByName,
+    setFilterByName,
+  };
+
   return (
-    <PlanetsContext.Provider
-      value={ {
-        planets,
-        columnLabels,
-      } }
-    >
+    <PlanetsContext.Provider value={ value }>
       {children}
     </PlanetsContext.Provider>
   );
