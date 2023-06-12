@@ -8,17 +8,34 @@ function Table() {
     planets,
     columnLabels,
     filterByName,
-    filterByNum,
+    filteredLists,
+    // setFilteredLists,
   } = useContext(PlanetsContext);
 
   const [filteredPlanets, setFilteredPlanets] = useState(planets);
 
   useEffect(() => {
-    const filtersPlanets = planets.filter(({ name }) => (
+    const filtersPlanetsByName = planets.filter(({ name }) => (
       name.toLowerCase().includes(filterByName.toLowerCase())
     ));
-    setFilteredPlanets(filtersPlanets);
-  }, [filterByName, planets]);
+
+    const filteredPlanetsByLists = filtersPlanetsByName.filter((planet) => (
+      filteredLists.every(({ column, comparison, value }) => {
+        const planetValue = Number(planet[column]);
+        switch (comparison) {
+        case 'maior que':
+          return planetValue > Number(value);
+        case 'menor que':
+          return planetValue < Number(value);
+        case 'igual a':
+          return planetValue === Number(value);
+        default:
+          return true;
+        }
+      })
+    ));
+    setFilteredPlanets(filteredPlanetsByLists);
+  }, [filterByName, planets, filteredLists]);
 
   return (
     <div>

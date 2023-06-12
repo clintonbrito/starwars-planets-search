@@ -4,7 +4,7 @@ export default function Header() {
   return (
     <h1
       className="py-12 font-bold text-5xl
-      text-yellow-500 uppercase text-center bg-black"
+      text-yellow-500 uppercase text-center bg-black mt-16"
     >
       Star Wars Planets
     </h1>

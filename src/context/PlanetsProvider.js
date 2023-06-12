@@ -10,21 +10,22 @@ function PlanetsProvider({ children }) {
     comparison: 'maior que',
     value: 0,
   });
+  const [filteredLists, setFilteredLists] = useState([]);
 
   const columnLabels = [
-    'Name',
-    'Rotation Period',
-    'Orbital Period',
-    'Diameter',
-    'Climate',
-    'Gravity',
-    'Terrain',
-    'Surface Water',
-    'Population',
-    'Films',
-    'Created',
-    'Edited',
-    'URL',
+    'name',
+    'rotation_period',
+    'orbital_period',
+    'diameter',
+    'climate',
+    'gravity',
+    'terrain',
+    'surface_water',
+    'population',
+    'films',
+    'created',
+    'edited',
+    'url',
   ];
 
   useEffect(() => {
@@ -48,6 +49,8 @@ function PlanetsProvider({ children }) {
     setFilterByName,
     filterByNum,
     setFilterByNum,
+    filteredLists,
+    setFilteredLists,
   };
 
   return (
