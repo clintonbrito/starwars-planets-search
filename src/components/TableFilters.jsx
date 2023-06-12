@@ -1,25 +1,46 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 
 function TableFilters() {
   const {
     filterByName,
     setFilterByName,
-    filterByNum,
-    setFilterByNum,
+    // filterByNum,
+    // setFilterByNum,
+    // filteredPlanets,
+    setFilteredPlanets,
   } = useContext(PlanetsContext);
 
+  const [filter, setFilter] = useState({
+    column: 'population',
+    comparison: 'maior que',
+    value: 0,
+  });
+
+  const clearFilters = () => {
+    setFilter({
+      column: 'population',
+      comparison: 'maior que',
+      value: 0,
+    });
+  };
+
   const handleChange = ({ target: { name, value } }) => {
-    setFilterByNum((prevState) => ({
+    setFilter((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   };
 
-  const handleFilter = () => {
-    const { column, comparison, value } = filterByNum;
-    const filter = { column, comparison, value };
-    setFilterByNum(filter);
+  const handleFilter = (click) => {
+    click.preventDefault();
+    const { column, comparison, value } = filter;
+    const newFilter = { column, comparison, value };
+    setFilteredPlanets((prevState) => ({
+      ...prevState,
+      newFilter,
+    }));
+    clearFilters();
   };
 
   return (
@@ -43,7 +64,7 @@ function TableFilters() {
           />
         </div>
       </div>
-      <form onSubmit={ (e) => e.preventDefault() } className="space-y-4">
+      <form className="space-y-4">
         <label htmlFor="columnFilter" className="px-3">
           Column
           <select
@@ -52,7 +73,7 @@ function TableFilters() {
             className="bg-black text-yellow-500 border border-yellow-500
               rounded px-2 py-1 ml-1"
             data-testid="column-filter"
-            value={ filterByNum.column }
+            value={ filter.column }
             onChange={ (e) => handleChange(e) }
           >
             <option value="population">population</option>
@@ -70,7 +91,7 @@ function TableFilters() {
             className="bg-black text-yellow-500 border border-yellow-500
               rounded px-2 py-1 ml-1"
             data-testid="comparison-filter"
-            value={ filterByNum.comparison }
+            value={ filter.comparison }
             onChange={ (e) => handleChange(e) }
           >
             <option value="maior que">maior que</option>
@@ -84,14 +105,14 @@ function TableFilters() {
             id="valueFilter"
             name="value"
             data-testid="value-filter"
-            value={ filterByNum.value }
+            value={ filter.value }
             onChange={ (e) => handleChange(e) }
             className="bg-black text-yellow-500 border border-yellow-500
               rounded px-2 py-1"
           />
         </label>
         <button
-          type="submit"
+          type="button"
           data-testid="button-filter"
           onClick={ handleFilter }
           className="bg-yellow-500 text-black rounded px-4 py-2 font-semibold

@@ -5,12 +5,9 @@ import PlanetsContext from './PlanetsContext';
 function PlanetsProvider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [filterByName, setFilterByName] = useState('');
-  const [filterByNum, setFilterByNum] = useState({
-    column: 'population',
-    comparison: 'maior que',
-    value: 0,
-  });
+  const [filterByNum, setFilterByNum] = useState([]);
   const [filteredLists, setFilteredLists] = useState([]);
+  const [filteredPlanets, setFilteredPlanets] = useState([]);
 
   const columnLabels = [
     'name',
@@ -51,6 +48,8 @@ function PlanetsProvider({ children }) {
     setFilterByNum,
     filteredLists,
     setFilteredLists,
+    filteredPlanets,
+    setFilteredPlanets,
   };
 
   return (

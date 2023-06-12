@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
 import randomID from '../helpers/randomID';
 import '../index.css';
@@ -8,34 +8,42 @@ function Table() {
     planets,
     columnLabels,
     filterByName,
-    filteredLists,
+    // filteredLists,
+    filterByNum,
     // setFilteredLists,
+    filteredPlanets,
+    setFilteredPlanets,
   } = useContext(PlanetsContext);
 
-  const [filteredPlanets, setFilteredPlanets] = useState(planets);
+  console.log(filteredPlanets);
 
   useEffect(() => {
     const filtersPlanetsByName = planets.filter(({ name }) => (
       name.toLowerCase().includes(filterByName.toLowerCase())
     ));
 
-    const filteredPlanetsByLists = filtersPlanetsByName.filter((planet) => (
-      filteredLists.every(({ column, comparison, value }) => {
-        const planetValue = Number(planet[column]);
-        switch (comparison) {
-        case 'maior que':
-          return planetValue > Number(value);
-        case 'menor que':
-          return planetValue < Number(value);
-        case 'igual a':
-          return planetValue === Number(value);
-        default:
-          return true;
-        }
-      })
-    ));
+    let filteredPlanetsByLists = filtersPlanetsByName;
+
+    if (Array.isArray(filterByNum) && filterByNum.length > 0) {
+      filteredPlanetsByLists = filtersPlanetsByName.filter((planet) => (
+        filterByNum.every(({ column, comparison, value }) => {
+          const planetValue = Number(planet[column]);
+          switch (comparison) {
+          case 'maior que':
+            return planetValue > Number(value);
+          case 'menor que':
+            return planetValue < Number(value);
+          case 'igual a':
+            return planetValue === Number(value);
+          default:
+            return true;
+          }
+        })
+      ));
+    }
+
     setFilteredPlanets(filteredPlanetsByLists);
-  }, [filterByName, planets, filteredLists]);
+  }, [filterByName, filterByNum, planets]);
 
   return (
     <div>
