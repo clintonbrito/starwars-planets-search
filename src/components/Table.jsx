@@ -8,6 +8,7 @@ function Table() {
     planets,
     columnLabels,
     filterByName,
+    filterByNum,
   } = useContext(PlanetsContext);
 
   const [filteredPlanets, setFilteredPlanets] = useState(planets);
@@ -21,13 +22,13 @@ function Table() {
 
   return (
     <div>
-      <table className="bg-black text-yellow-400">
+      <table className="bg-black text-yellow-500">
         <thead>
           <tr>
             {columnLabels.map((column) => (
               <th
                 key={ randomID() }
-                className="px-4 py-2 text-yellow-400 font-medium uppercase"
+                className="px-4 py-2 text-yellow-500 font-medium uppercase"
               >
                 {column}
               </th>

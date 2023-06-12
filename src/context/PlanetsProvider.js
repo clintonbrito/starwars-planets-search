@@ -5,6 +5,11 @@ import PlanetsContext from './PlanetsContext';
 function PlanetsProvider({ children }) {
   const [planets, setPlanets] = useState([]);
   const [filterByName, setFilterByName] = useState('');
+  const [filterByNum, setFilterByNum] = useState({
+    column: 'population',
+    comparison: 'maior que',
+    value: 0,
+  });
 
   const columnLabels = [
     'Name',
@@ -23,7 +28,6 @@ function PlanetsProvider({ children }) {
   ];
 
   useEffect(() => {
-    // eslint-disable-next-line no-unused-vars
     const fetchPlanetsData = async () => {
       try {
         const response = await fetch('https://swapi.dev/api/planets/');
@@ -42,6 +46,8 @@ function PlanetsProvider({ children }) {
     columnLabels,
     filterByName,
     setFilterByName,
+    filterByNum,
+    setFilterByNum,
   };
 
   return (
