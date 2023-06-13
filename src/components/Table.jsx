@@ -15,7 +15,7 @@ function Table() {
     setFilteredPlanets,
   } = useContext(PlanetsContext);
 
-  console.log(filteredPlanets);
+  // console.log(filteredPlanets);
 
   useEffect(() => {
     const filtersPlanetsByName = planets.filter(({ name }) => (
@@ -25,8 +25,8 @@ function Table() {
     let filteredPlanetsByLists = filtersPlanetsByName;
 
     if (Array.isArray(filterByNum) && filterByNum.length > 0) {
-      filteredPlanetsByLists = filtersPlanetsByName.filter((planet) => (
-        filterByNum.every(({ column, comparison, value }) => {
+      filteredPlanetsByLists = filtersPlanetsByName
+        .filter((planet) => (filterByNum.every(({ column, comparison, value }) => {
           const planetValue = Number(planet[column]);
           switch (comparison) {
           case 'maior que':
@@ -38,8 +38,7 @@ function Table() {
           default:
             return true;
           }
-        })
-      ));
+        })));
     }
 
     setFilteredPlanets(filteredPlanetsByLists);
@@ -61,6 +60,7 @@ function Table() {
           </tr>
         </thead>
         <tbody>
+          {/* {console.log(filteredPlanets)} */}
           { filteredPlanets.map((planet, index) => (
             <tr
               key={ randomID() }

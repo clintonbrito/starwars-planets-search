@@ -5,10 +5,10 @@ function TableFilters() {
   const {
     filterByName,
     setFilterByName,
-    // filterByNum,
-    // setFilterByNum,
+    filterByNum,
+    setFilterByNum,
     // filteredPlanets,
-    setFilteredPlanets,
+    // setFilteredPlanets,
   } = useContext(PlanetsContext);
 
   const [filter, setFilter] = useState({
@@ -36,11 +36,12 @@ function TableFilters() {
     click.preventDefault();
     const { column, comparison, value } = filter;
     const newFilter = { column, comparison, value };
-    setFilteredPlanets((prevState) => ({
-      ...prevState,
+    setFilterByNum([
+      ...filterByNum,
       newFilter,
-    }));
+    ]);
     clearFilters();
+    // console.log(filterByNum);
   };
 
   return (
