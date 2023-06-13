@@ -7,8 +7,7 @@ function TableFilters() {
     setFilterByName,
     filterByNum,
     setFilterByNum,
-    // filteredPlanets,
-    // setFilteredPlanets,
+    filterColumns,
   } = useContext(PlanetsContext);
 
   const [filter, setFilter] = useState({
@@ -32,17 +31,45 @@ function TableFilters() {
     }));
   };
 
+  // const handleFilter = (click) => {
+  //   click.preventDefault();
+  //   const { column, comparison, value } = filter;
+  //   const newFilter = { column, comparison, value };
+  //   setFilterByNum([
+  //     ...filterByNum,
+  //     newFilter,
+  //   ]);
+  //   clearFilters();
+  // };
+
   const handleFilter = (click) => {
     click.preventDefault();
     const { column, comparison, value } = filter;
     const newFilter = { column, comparison, value };
-    setFilterByNum([
-      ...filterByNum,
-      newFilter,
-    ]);
+
+    const isColumnSelected = filterByNum.some(
+      (eachFilter) => eachFilter.column === column,
+    );
+
+    const allColumnsSelected = filterColumns
+      .every((eachColumn) => filterByNum
+        .some((filterName) => filterName.column === eachColumn));
+
+    if (!isColumnSelected && !allColumnsSelected) {
+      setFilterByNum((prevState) => [
+        ...prevState,
+        newFilter,
+      ]);
+    } else {
+      // Caso a coluna já esteja selecionada, remove a opção de selecionar a coluna novamente utilizando um filter.
+      setFilterByNum((prevState) => prevState
+        .filter((eachFilter) => eachFilter.column !== column));
+    }
+
     clearFilters();
-    // console.log(filterByNum);
   };
+
+  // Requisitos 3 e 4 feitos com o auxílio do colega de turma Francisco Tiago Rios Motta, Turma 30 - Tribo A.
 
   return (
     <div className="py-10 bg-black text-yellow-500">
@@ -77,11 +104,16 @@ function TableFilters() {
             value={ filter.column }
             onChange={ (e) => handleChange(e) }
           >
-            <option value="population">population</option>
-            <option value="orbital_period">orbital_period</option>
-            <option value="diameter">diameter</option>
-            <option value="rotation_period">rotation_period</option>
-            <option value="surface_water">surface_water</option>
+            {filterColumns.map((eachColumn) => {
+              const isColumnSelected2 = filterByNum.some(
+                (eachFilter) => eachFilter.column === eachColumn,
+              );
+              return !isColumnSelected2 && (
+                <option key={ eachColumn } value={ eachColumn }>
+                  {eachColumn}
+                </option>
+              );
+            })}
           </select>
         </label>
         <label htmlFor="comparisonFilter">

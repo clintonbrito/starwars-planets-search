@@ -8,6 +8,10 @@ function PlanetsProvider({ children }) {
   const [filterByNum, setFilterByNum] = useState([]);
   const [filteredLists, setFilteredLists] = useState([]);
   const [filteredPlanets, setFilteredPlanets] = useState([]);
+  const [isColumnSelected, setIsColumnSelected] = useState(false);
+  const [filterColumns, setFilterColumns] = useState([
+    'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water',
+  ]);
 
   const columnLabels = [
     'name',
@@ -50,6 +54,10 @@ function PlanetsProvider({ children }) {
     setFilteredLists,
     filteredPlanets,
     setFilteredPlanets,
+    isColumnSelected,
+    setIsColumnSelected,
+    filterColumns,
+    setFilterColumns,
   };
 
   return (

@@ -8,11 +8,10 @@ function Table() {
     planets,
     columnLabels,
     filterByName,
-    // filteredLists,
     filterByNum,
-    // setFilteredLists,
     filteredPlanets,
     setFilteredPlanets,
+    isColumnSelected,
   } = useContext(PlanetsContext);
 
   // console.log(filteredPlanets);
@@ -24,7 +23,7 @@ function Table() {
 
     let filteredPlanetsByLists = filtersPlanetsByName;
 
-    if (Array.isArray(filterByNum) && filterByNum.length > 0) {
+    if (!isColumnSelected && Array.isArray(filterByNum) && filterByNum.length > 0) {
       filteredPlanetsByLists = filtersPlanetsByName
         .filter((planet) => (filterByNum.every(({ column, comparison, value }) => {
           const planetValue = Number(planet[column]);
