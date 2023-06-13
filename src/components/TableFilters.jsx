@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import PlanetsContext from '../context/PlanetsContext';
+import randomID from '../helpers/randomID';
 
 function TableFilters() {
   const {
@@ -70,6 +71,22 @@ function TableFilters() {
   };
 
   // Requisitos 3 e 4 feitos com o auxílio do colega de turma Francisco Tiago Rios Motta, Turma 30 - Tribo A.
+
+  // const handleDeleteFilter = (column) => {
+  //   const updatedFilters = [...filterByNum];
+  //   updatedFilters.splice(column, 1);
+  //   setFilterByNum(updatedFilters);
+  // };
+
+  const handleDeleteFilter = (columnSelected) => {
+    const updatedFilters = filterByNum
+      .filter((eachFilter) => eachFilter.column !== columnSelected);
+    setFilterByNum(updatedFilters);
+  };
+
+  const handleDeleteAllFilters = () => {
+    setFilterByNum([]);
+  };
 
   return (
     <div className="py-10 bg-black text-yellow-500">
@@ -153,6 +170,37 @@ function TableFilters() {
         >
           Filter
         </button>
+
+        { filterByNum.length > 0 && (
+          <div>
+            <h2>Applied Filters:</h2>
+            <ul>
+              {filterByNum.map((eachFilter) => (
+                <li key={ randomID() } data-testid="filter">
+                  {`${eachFilter.column}, ${eachFilter.comparison}: ${eachFilter.value}`}
+                  <button
+                    type="button"
+                    // onClick={ () => handleDeleteFilter(index) }
+                    onClick={ () => handleDeleteFilter(eachFilter.column) }
+                    className="bg-yellow-500 text-black rounded px-2 py-0 font-semibold
+                      hover:bg-yellow-600 ml-2"
+                  >
+                    X
+                  </button>
+                </li>
+              ))}
+            </ul>
+            <button
+              type="button"
+              onClick={ handleDeleteAllFilters }
+              data-testid="button-remove-filters"
+              className="bg-yellow-500 text-black rounded px-2 py-0 font-semibold
+                hover:bg-yellow-600 ml-2"
+            >
+              Remove All Filters
+            </button>
+          </div>
+        )}
       </form>
     </div>
   );
