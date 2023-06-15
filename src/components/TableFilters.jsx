@@ -43,8 +43,7 @@ function TableFilters() {
   //   clearFilters();
   // };
 
-  const handleFilter = (click) => {
-    click.preventDefault();
+  const handleFilter = () => {
     const { column, comparison, value } = filter;
     const newFilter = { column, comparison, value };
 

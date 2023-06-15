@@ -32,10 +32,10 @@ function Table() {
             return planetValue > Number(value);
           case 'menor que':
             return planetValue < Number(value);
-          case 'igual a':
-            return planetValue === Number(value);
           default:
-            return true;
+            return planetValue === Number(value);
+          // default:
+          //   return true;
           }
         })));
     }
