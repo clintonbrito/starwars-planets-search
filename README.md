@@ -16,8 +16,8 @@
 
 <h2>💡 The story behind</h2>
 
-<p>I developed a list with filters for planets from the Star Wars universe using the Context API and Hooks to manage global states.</p>
-<p>The main goals of this project was:</p>
+<p>I developed a list with filters for planets from the Star Wars universe using Context API and Hooks to manage global states.</p>
+<p>The main goals of this project were:</p>
 
 <ol>
   <li>To use React's Context API to manage state.</li>
